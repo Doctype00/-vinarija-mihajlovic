@@ -94,10 +94,10 @@ if (wineSections.length > 0) {
             }
         });
     }, {
-        /* Trigger when 45% of the section is visible —
-           high enough to feel intentional, low enough to
-           catch tall mobile sections mid-scroll             */
-        threshold: 0.45
+        /* 20% vidljivosti je dovoljno da sekcija "uđe u fokus" —
+           na mobilnom kolona-layout sekcije su visoke pa ne
+           mogu dostići visok threshold dok se skroluje          */
+        threshold: 0.2
     });
 
     wineSections.forEach(function (section) {

@@ -47,7 +47,11 @@
             pointer-events: none;
         }
 
-        .wine-section:hover::before,
+        /* hover: hover = samo na uređajima sa pravim kursorom (desktop) */
+        @media (hover: hover) {
+            .wine-section:hover::before { opacity: 1; }
+        }
+        /* in-view radi na svim uređajima (JS Intersection Observer) */
         .wine-section.in-view::before { opacity: 1; }
 
         .wine-section.red::before {
@@ -105,7 +109,12 @@
             transition: transform 0.6s ease, filter 0.6s ease;
         }
 
-        .wine-section:hover .wine-bottle-col img,
+        @media (hover: hover) {
+            .wine-section:hover .wine-bottle-col img {
+                transform: translateY(-12px);
+                filter: drop-shadow(0 40px 70px rgba(139, 34, 50, 0.45));
+            }
+        }
         .wine-section.in-view .wine-bottle-col img {
             transform: translateY(-12px);
             filter: drop-shadow(0 40px 70px rgba(139, 34, 50, 0.45));
@@ -135,7 +144,12 @@
             user-select: none;
         }
 
-        .wine-section:hover .wine-number,
+        @media (hover: hover) {
+            .wine-section:hover .wine-number {
+                opacity: 0.22;
+                transform: scale(1.07) translateY(-40px);
+            }
+        }
         .wine-section.in-view .wine-number {
             opacity: 0.22;
             transform: scale(1.07) translateY(-40px);
