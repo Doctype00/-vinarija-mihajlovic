@@ -19,7 +19,7 @@
 
         .gallery-header {
             text-align: center;
-            margin-bottom: 140px;
+            margin-bottom: 70px;
         }
 
         .gallery-header .sec-title { margin-bottom: 12px; }
@@ -31,7 +31,9 @@
             opacity: 0.55;
         }
 
-        /* ─── CAROUSEL ─── */
+        /* ════════════════════════════════
+           DESKTOP CAROUSEL
+        ════════════════════════════════ */
         .gallery {
             width: 100%;
             max-width: 1400px;
@@ -101,7 +103,7 @@
             transform: translateX(-50%);
         }
 
-        /* ─── CONTROLS ─── */
+        /* ─── DESKTOP CONTROLS ─── */
         .gallery-controls {
             display: flex;
             justify-content: center;
@@ -118,7 +120,6 @@
             padding: 14px 20px;
             color: var(--cream-2);
             transition: border-color 0.3s ease, color 0.3s ease;
-            position: relative;
         }
 
         .gallery-controls button:hover {
@@ -153,34 +154,136 @@
         .gallery-controls-previous:hover::before { transform: rotate(135deg) translate(2px, 2px); }
         .gallery-controls-next:hover::before     { transform: rotate(-45deg) translate(-2px, 2px); }
 
-        /* ─── RESPONSIVE ─── */
+        /* ════════════════════════════════
+           MOBILE SLIDER  (≤ 700px)
+        ════════════════════════════════ */
+        .gallery-mobile { display: none; width: 100%; }
+
+        .gallery-mobile-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 14px;
+            /* peek of neighbouring slides */
+            padding: 0 10%;
+            scrollbar-width: none;
+        }
+
+        .gallery-mobile-track::-webkit-scrollbar { display: none; }
+
+        .gallery-mobile-slide {
+            flex: 0 0 80%;
+            scroll-snap-align: center;
+            height: 56vw;
+            max-height: 340px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.35s ease, filter 0.35s ease;
+        }
+
+        .gallery-mobile-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.55) sepia(0.15);
+            transition: filter 0.35s ease;
+        }
+
+        /* Active (center) slide — gold outline + brighter */
+        .gallery-mobile-slide.active img {
+            filter: brightness(0.82) sepia(0.08);
+        }
+
+        .gallery-mobile-slide.active {
+            outline: 1px solid var(--border);
+            outline-offset: 5px;
+        }
+
+        /* ─── DOTS ─── */
+        .gallery-mobile-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .gallery-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.25;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-dot.active {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+
+        /* ─── MOBILE ARROWS ─── */
+        .gallery-mobile-arrows {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .gallery-mobile-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--cream-2);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .gallery-mobile-btn:focus  { outline: none; }
+        .gallery-mobile-btn:active { border-color: var(--gold); color: var(--gold); }
+
+        .gallery-mobile-btn::before {
+            border: solid var(--gold);
+            border-width: 0 1.5px 1.5px 0;
+            content: '';
+            display: inline-block;
+            height: 8px;
+            width: 8px;
+        }
+
+        .gallery-mobile-btn.prev::before { transform: rotate(135deg); }
+        .gallery-mobile-btn.next::before { transform: rotate(-45deg); }
+
+        /* ════════════════════════════════
+           RESPONSIVE SWITCHES
+        ════════════════════════════════ */
         @media (max-width: 900px) {
-            .gallery-section { padding: 120px 4% 60px; }
-            .gallery-header  { margin-bottom: 60px; }
+            .gallery-section   { padding: 120px 4% 60px; }
+            .gallery-header    { margin-bottom: 60px; }
             .gallery-container { height: 340px; }
             .gallery-controls  { margin-top: 50px; }
-            .gallery-item-3 { height: 310px; width: 310px; }
+            .gallery-item-3    { height: 310px; width: 310px; }
             .gallery-item-2, .gallery-item-4 { height: 260px; width: 280px; }
         }
 
-        @media (max-width: 600px) {
-            .gallery-section   { padding: 100px 3% 50px; }
-            .gallery-header    { margin-bottom: 40px; }
-            .gallery-container { height: 260px; }
-            .gallery-controls  { margin-top: 40px; gap: 40px; }
-            .gallery-item      { width: 220px; height: 190px; }
-            .gallery-item-3    { width: 250px; height: 240px; }
-            .gallery-item-2, .gallery-item-4 { height: 210px; width: 230px; }
-        }
+        /* Switch to mobile slider below 700px */
+        @media (max-width: 700px) {
+            .gallery-section   { padding: 100px 0 60px; }
+            .gallery-header    { margin-bottom: 40px; padding: 0 5%; }
 
-        @media (max-width: 430px) {
-            .gallery-section   { padding: 90px 2% 40px; }
-            .gallery-container { height: 220px; }
-            .gallery-item      { width: 180px; height: 160px; }
-            .gallery-item-3    { width: 200px; height: 200px; }
-            .gallery-item-2, .gallery-item-4 { height: 175px; width: 185px; }
-            .gallery-item-1    { left: 6%; }
-            .gallery-item-5    { left: 94%; }
+            /* Hide desktop carousel */
+            .gallery-container { display: none; }
+            .gallery-controls  { display: none; }
+
+            /* Show mobile slider */
+            .gallery-mobile    { display: block; }
         }
     </style>
 </head>
@@ -199,7 +302,7 @@
         <li><a href="kontakt.html">Kontakt</a></li>
     </ul>
     <ul class="nav-main">
-        <li><a href="index.html" class="logo-link"><span class="logo-text">Mihajlović</span></a></li>
+        <li><a href="index.html" class="logo-link"><span class="logo-text"><img src="slike/logo.png" alt="" width="100px" height="50px"></span></a></li>
         <li class="hideOnMobile"><a href="index.html" class="nav-link">Početna</a></li>
         <li class="hideOnMobile"><a href="vina.html" class="nav-link">Vina</a></li>
         <li class="hideOnMobile"><a href="o_nama.html" class="nav-link">O nama</a></li>
@@ -220,14 +323,51 @@
     </div>
 
     <div class="gallery">
+
+        <!-- ── DESKTOP CAROUSEL ─────────────────── -->
         <div class="gallery-container">
-            <img class="gallery-item gallery-item-1" src="slike/Mihajlović_Bure.jpg" data-index="1" alt="">
+            <img class="gallery-item gallery-item-1" src="slike/Mihajlović_Bure.jpg"   data-index="1" alt="">
             <img class="gallery-item gallery-item-2" src="slike/Mihajlović_Pampur.jpg" data-index="2" alt="">
-            <img class="gallery-item gallery-item-3" src="slike/Ai slika.jpeg" data-index="3" alt="">
-            <img class="gallery-item gallery-item-4" src="slike/dragulj_upscaled.png" data-index="4" alt="">
-            <img class="gallery-item gallery-item-5" src="slike/slika4.jpg" data-index="5" alt="">
+            <img class="gallery-item gallery-item-3" src="slike/Ai slika.jpeg"         data-index="3" alt="">
+            <img class="gallery-item gallery-item-4" src="slike/dragulj_upscaled.png"  data-index="4" alt="">
+            <img class="gallery-item gallery-item-5" src="slike/slika4.jpg"            data-index="5" alt="">
         </div>
         <div class="gallery-controls"></div>
+
+        <!-- ── MOBILE SLIDER ──────────────────────── -->
+        <div class="gallery-mobile">
+            <div class="gallery-mobile-track" id="mobileTrack">
+                <div class="gallery-mobile-slide">
+                    <img src="slike/Mihajlović_Bure.jpg"   alt="Burad">
+                </div>
+                <div class="gallery-mobile-slide">
+                    <img src="slike/Mihajlović_Pampur.jpg" alt="Pampur">
+                </div>
+                <div class="gallery-mobile-slide">
+                    <img src="slike/Ai slika.jpeg"         alt="Galerija">
+                </div>
+                <div class="gallery-mobile-slide">
+                    <img src="slike/dragulj_upscaled.png"  alt="Dragulj">
+                </div>
+                <div class="gallery-mobile-slide">
+                    <img src="slike/slika4.jpg"            alt="Vinarija">
+                </div>
+            </div>
+
+            <div class="gallery-mobile-dots" id="mobileDots">
+                <span class="gallery-dot active" data-index="0"></span>
+                <span class="gallery-dot"        data-index="1"></span>
+                <span class="gallery-dot"        data-index="2"></span>
+                <span class="gallery-dot"        data-index="3"></span>
+                <span class="gallery-dot"        data-index="4"></span>
+            </div>
+
+            <div class="gallery-mobile-arrows">
+                <button class="gallery-mobile-btn prev" id="mobilePrev" aria-label="Prethodna"></button>
+                <button class="gallery-mobile-btn next" id="mobileNext" aria-label="Sledeća"></button>
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -255,5 +395,70 @@
 </footer>
 
 <script src="skript.js"></script>
+<script>
+/* ─── MOBILE SLIDER ───────────────────────────── */
+(function () {
+    var track  = document.getElementById('mobileTrack');
+    var dots   = document.querySelectorAll('.gallery-dot');
+    var slides = document.querySelectorAll('.gallery-mobile-slide');
+    var prev   = document.getElementById('mobilePrev');
+    var next   = document.getElementById('mobileNext');
+
+    if (!track || !slides.length) return;
+
+    var current = 0;
+
+    function goTo(index) {
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        current = index;
+
+        /* Scroll track to the target slide */
+        var slide = slides[index];
+        var trackRect  = track.getBoundingClientRect();
+        var slideRect  = slide.getBoundingClientRect();
+        var scrollLeft = track.scrollLeft + (slideRect.left - trackRect.left)
+                         - (trackRect.width / 2) + (slideRect.width / 2);
+        track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+
+        updateActive();
+    }
+
+    function updateActive() {
+        /* Active slide */
+        slides.forEach(function (s, i) {
+            s.classList.toggle('active', i === current);
+        });
+        /* Active dot */
+        dots.forEach(function (d, i) {
+            d.classList.toggle('active', i === current);
+        });
+    }
+
+    /* Scroll → update active dot using IntersectionObserver */
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+                var idx = Array.from(slides).indexOf(entry.target);
+                if (idx !== -1) { current = idx; updateActive(); }
+            }
+        });
+    }, { root: track, threshold: 0.6 });
+
+    slides.forEach(function (s) { observer.observe(s); });
+
+    /* Arrow buttons */
+    if (prev) prev.addEventListener('click', function () { goTo(current - 1); });
+    if (next) next.addEventListener('click', function () { goTo(current + 1); });
+
+    /* Dot clicks */
+    dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); });
+    });
+
+    /* Init first slide */
+    updateActive();
+})();
+</script>
 </body>
 </html>
