@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vina &mdash; Vinarija Mihajlović</title>
+    <link rel="stylesheet" href="stil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ─── WINE SECTIONS ─── */
+        .wines-header {
+            padding: 180px 8% 80px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: radial-gradient(ellipse at 50% 0%, #2a0a12 0%, var(--bg) 65%);
+        }
+
+        .wines-header .sec-title { margin-bottom: 14px; }
+
+        .wines-header p {
+            font-size: 13px;
+            color: var(--cream-2);
+            letter-spacing: 1px;
+            opacity: 0.65;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ─── WINE SECTION ─── */
+        .wine-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 8%;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            gap: 60px;
+        }
+
+        .wine-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            pointer-events: none;
+        }
+
+        .wine-section:hover::before { opacity: 1; }
+
+        .wine-section.red::before {
+            background:
+                radial-gradient(ellipse at 28% 50%, rgba(110, 18, 32, 0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 28% 50%, rgba(80, 10, 22, 0.15) 0%, transparent 75%);
+        }
+
+        .wine-section.rose::before {
+            background:
+                radial-gradient(ellipse at 72% 50%, rgba(150, 35, 65, 0.30) 0%, transparent 50%),
+                radial-gradient(ellipse at 72% 50%, rgba(110, 20, 48, 0.12) 0%, transparent 75%);
+        }
+
+        .wine-section.white::before {
+            background:
+                radial-gradient(ellipse at 72% 50%, rgba(20, 40, 70, 0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 72% 50%, rgba(10, 25, 50, 0.15) 0%, transparent 75%);
+        }
+
+        /* Reverse layout for even sections */
+        .wine-section.reverse { flex-direction: row-reverse; }
+
+        .wine-section.reverse.red::before {
+            background:
+                radial-gradient(ellipse at 72% 50%, rgba(110, 18, 32, 0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 72% 50%, rgba(80, 10, 22, 0.15) 0%, transparent 75%);
+        }
+
+        .wine-section.reverse.rose::before {
+            background:
+                radial-gradient(ellipse at 28% 50%, rgba(150, 35, 65, 0.30) 0%, transparent 50%),
+                radial-gradient(ellipse at 28% 50%, rgba(110, 20, 48, 0.12) 0%, transparent 75%);
+        }
+
+        .wine-section.reverse.white::before {
+            background:
+                radial-gradient(ellipse at 28% 50%, rgba(20, 40, 70, 0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 28% 50%, rgba(10, 25, 50, 0.15) 0%, transparent 75%);
+        }
+
+        /* ─── BOTTLE COLUMN ─── */
+        .wine-bottle-col {
+            flex: 0 0 45%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .wine-bottle-col img {
+            height: 520px;
+            width: auto;
+            filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.75));
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .wine-section:hover .wine-bottle-col img {
+            transform: translateY(-12px);
+            filter: drop-shadow(0 40px 70px rgba(139, 34, 50, 0.45));
+        }
+
+        /* ─── INFO COLUMN ─── */
+        .wine-info-col {
+            flex: 1;
+            max-width: 480px;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .wine-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 80px;
+            font-weight: 300;
+            color: var(--gold);
+            opacity: 0.08;
+            line-height: 1;
+            margin-bottom: -40px;
+            display: block;
+            position: relative;
+            z-index: 0;
+            transition: opacity 0.45s ease-in-out, transform 0.45s ease-in-out;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .wine-section:hover .wine-number {
+            opacity: 0.22;
+            transform: scale(1.07) translateY(-40px);
+        }
+
+        .wine-type-badge,
+        .wine-name,
+        .wine-divider,
+        .wine-desc,
+        .wine-grapes {
+            position: relative;
+            z-index: 1;
+        }
+
+        .wine-type-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            margin-bottom: 20px;
+        }
+
+        .wine-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(44px, 6vw, 80px);
+            font-weight: 400;
+            color: var(--cream);
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .wine-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.5;
+            margin-bottom: 24px;
+        }
+
+        .wine-desc {
+            font-size: 14px;
+            color: var(--cream-2);
+            line-height: 1.85;
+            margin-bottom: 30px;
+        }
+
+        .wine-grapes {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--cream-2);
+            opacity: 0.55;
+        }
+
+        .wine-grapes::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.6;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .wine-section,
+            .wine-section.reverse {
+                flex-direction: column;
+                padding: 80px 6%;
+                min-height: auto;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .wine-bottle-col {
+                padding: 20px;
+                flex: none;
+                width: 100%;
+            }
+
+            .wine-bottle-col img { height: 340px; }
+
+            .wine-info-col { max-width: 100%; }
+
+            .wine-grapes { justify-content: center; }
+
+            .wine-divider { margin: 24px auto; }
+        }
+
+        @media (max-width: 480px) {
+            .wine-bottle-col img { height: 260px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <ul class="sidebar" id="sidebar">
+        <li><a href="#" onclick="hideSidebar(); return false;" class="sidebar-close">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </a></li>
+        <li><a href="index.html">Početna</a></li>
+        <li><a href="vina.html">Vina</a></li>
+        <li><a href="o_nama.html">O nama</a></li>
+        <li><a href="galerija.html">Galerija</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <ul class="nav-main">
+        <li><a href="index.html" class="logo-link"><span class="logo-text">Mihajlović</span></a></li>
+        <li class="hideOnMobile"><a href="index.html" class="nav-link">Početna</a></li>
+        <li class="hideOnMobile"><a href="vina.html" class="nav-link">Vina</a></li>
+        <li class="hideOnMobile"><a href="o_nama.html" class="nav-link">O nama</a></li>
+        <li class="hideOnMobile"><a href="galerija.html" class="nav-link">Galerija</a></li>
+        <li class="hideOnMobile"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="hideOnMobile"><a href="kontakt.html" class="nav-link">Kontakt</a></li>
+        <li class="menu-button" onclick="showSidebar()">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a>
+        </li>
+    </ul>
+</nav>
+
+<!-- ─── PAGE HEADER ──────────────────────────── -->
+<header class="wines-header">
+    <span class="sec-label">Naša kolekcija</span>
+    <h1 class="sec-title">Vina Podruma Mihajlović</h1>
+    <p>Svako vino nosi u sebi duh Župe aleksandrovačke i tradiciju dugu više od 160 godina.</p>
+</header>
+
+<!-- ─── CABERNE ──────────────────────────────── -->
+<section id="Caberne" class="wine-section red">
+    <div class="wine-bottle-col">
+        <img src="slike/Packshot_Dragulj_Tamno Plavi.png" alt="Caberne">
+    </div>
+    <div class="wine-info-col">
+        <span class="wine-number">01</span>
+        <span class="wine-type-badge">Crno vino</span>
+        <h2 class="wine-name">Caberne</h2>
+        <div class="wine-divider"></div>
+        <p class="wine-desc">Crno vino „sopstvena berba" oceđeno iz istoimene sorte grožđa koje vodi poreklo iz Francuske. Klimatski uslovi Župe aleksandrovačke, kojima se ova sorta odlično prilagodila, su učinili da se ovo vino razlikuje od svih ostalih vina proizvedenih od ove sorte grožđa.</p>
+        <div class="wine-grapes">Cabernet Sauvignon &middot; Sopstvena berba</div>
+    </div>
+</section>
+
+<!-- ─── ROSÉ ─────────────────────────────────── -->
+<section id="Rose" class="wine-section rose reverse">
+    <div class="wine-bottle-col">
+        <img src="slike/Packshot_Rose.png" alt="Rosé">
+    </div>
+    <div class="wine-info-col">
+        <span class="wine-number">02</span>
+        <span class="wine-type-badge">Ružičasto vino</span>
+        <h2 class="wine-name">Rosé</h2>
+        <div class="wine-divider"></div>
+        <p class="wine-desc">Ružičasto stono vino proizvedeno od grožđa sorte Prokupac „sopstvena berba" po tradiciji i tehnologiji vina Podruma Mihajlović, dugoj već više od 160 godina.</p>
+        <div class="wine-grapes">Prokupac &middot; Sopstvena berba</div>
+    </div>
+</section>
+
+<!-- ─── DRAGULJ ───────────────────────────────── -->
+<section id="Dragulj" class="wine-section red">
+    <div class="wine-bottle-col">
+        <img src="slike/Packshot_Dragulj.png" alt="Dragulj">
+    </div>
+    <div class="wine-info-col">
+        <span class="wine-number">03</span>
+        <span class="wine-type-badge">Crno vino</span>
+        <h2 class="wine-name">Dragulj</h2>
+        <div class="wine-divider"></div>
+        <p class="wine-desc">Crno, suvo vino, „sopstvena berba". Oceđeno je od autohtone sorte grožđa „Prokupac" i malog udela sorte „Župski bojadiser". Proizvodi se kombinacijom klasične tehnologije proizvodnje crnih vina uz tradiciju dužu od 160 godina i primene savremenih tehnoloških postupaka.</p>
+        <div class="wine-grapes">Prokupac &middot; Župski bojadiser</div>
+    </div>
+</section>
+
+<!-- ─── ENIGMA ────────────────────────────────── -->
+<section id="Enigma" class="wine-section red reverse">
+    <div class="wine-bottle-col">
+        <img src="slike/Packshot_Enigma PP.png" alt="Enigma">
+    </div>
+    <div class="wine-info-col">
+        <span class="wine-number">04</span>
+        <span class="wine-type-badge">Belo vino</span>
+        <h2 class="wine-name">Enigma</h2>
+        <div class="wine-divider"></div>
+        <p class="wine-desc">Belo stono suvo vino, „sopstvena berba". Oceđena je od sorti grožđa „Italijanski rizling" i „Tamjanika". Nastao je kupažom uz primenu savremene tehnologije za bela vina i tradicijom dugom više od 160 godina u podruму Mihajlović.</p>
+        <div class="wine-grapes">Italijanski rizling &middot; Tamjanika</div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">Mihajlović</div>
+        <div class="footer-tagline">Vinarija &middot; Od 1856. godine</div>
+        <div class="footer-hr"></div>
+        <ul class="footer-nav">
+            <li><a href="index.html">Početna</a></li>
+            <li><a href="vina.html">Vina</a></li>
+            <li><a href="o_nama.html">O nama</a></li>
+            <li><a href="galerija.html">Galerija</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+        <div class="footer-social">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/vinarijamihajlovic?igsh=MWQzcGxwazJzd2RjOQ==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+        <div class="footer-hr"></div>
+        <p class="footer-copy">&copy; 2024 Vinarija Mihajlović &middot; Sva prava zadržana</p>
+    </div>
+</footer>
+
+<script src="skript.js"></script>
+</body>
+</html>

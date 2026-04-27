@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinarija Mihajlović</title>
+    <link rel="stylesheet" href="stil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ─── HERO ─── */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 20%, #3d0f1a 0%, #1c0b0b 35%, var(--bg) 70%);
+            overflow: hidden;
+            padding-top: 80px;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 1px; height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--gold));
+            opacity: 0.35;
+        }
+
+        .hero-eyebrow {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.3s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(60px, 12vw, 130px);
+            font-weight: 300;
+            color: var(--cream);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            line-height: 1;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.5s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--cream-2);
+            margin-top: 16px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.7s forwards;
+        }
+
+        .hero-line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            margin: 28px auto;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.9s forwards;
+        }
+
+        .hero-bottles {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 32px;
+            padding: 0 20px;
+            opacity: 0;
+            animation: fadeUp 1.2s ease 0.8s forwards;
+        }
+
+        .hero-bottle-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-bottle-item:hover { transform: translateY(-16px); }
+
+        /*
+         * All frames are identical: 190 × 380px, box-sizing: border-box.
+         * All bottle images have AR 0.46-0.48 < frame AR 0.50 → height-constrained
+         * → every bottle renders at exactly 380px tall.
+         *
+         * Rosé PNG has ~14% less top whitespace than the other packshots,
+         * so its bottle content appears ~50px taller at 380px display height.
+         * Compensate with padding-top on the rosé frame only:
+         *   content area = 380 − 55 = 325px → bottle renders at ~302px ≈ others' ~304px.
+         */
+        .hero-bottle-frame {
+            width: 250px;
+            height: 480px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .hero-bottle-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+            filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.8));
+            transition: filter 0.5s ease;
+        }
+
+        .hero-bottle-item:hover .hero-bottle-frame img {
+            filter: drop-shadow(0 35px 60px rgba(139, 34, 50, 0.55));
+        }
+
+        .hero-bottle-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--gold);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            opacity: 0.65;
+            transition: opacity 0.3s ease;
+            width: 190px;
+            text-align: center;
+            display: block;
+        }
+
+        .hero-bottle-item:hover .hero-bottle-name { opacity: 1; }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 35px; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 1.6s forwards;
+        }
+
+        .scroll-indicator span {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cream-2);
+            opacity: 0.45;
+        }
+
+        .scroll-line {
+            width: 1px; height: 50px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 2.2s ease infinite;
+        }
+
+        /* ─── QUOTE ─── */
+        .quote-section {
+            padding: 100px 8%;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quote-mark {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 80px;
+            color: var(--gold);
+            line-height: 0.5;
+            opacity: 0.25;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .quote-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(18px, 2.5vw, 26px);
+            font-style: italic;
+            font-weight: 300;
+            color: var(--cream);
+            max-width: 780px;
+            margin: 0 auto 22px;
+            line-height: 1.65;
+            opacity: 0.85;
+        }
+
+        .quote-author {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.65;
+        }
+
+        /* ─── ABOUT PREVIEW ─── */
+        .about-preview {
+            padding: 110px 8%;
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 70px;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-v-divider {
+            width: 1px;
+            height: 280px;
+            background: var(--gold);
+            opacity: 0.12;
+            justify-self: center;
+        }
+
+        .about-text p {
+            font-size: 14px;
+            color: var(--cream-2);
+            line-height: 1.85;
+            margin-bottom: 32px;
+        }
+
+        .about-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 38px;
+            padding-left: 10px;
+        }
+
+        .stat-item {
+            border-left: 2px solid var(--gold);
+            padding-left: 24px;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cream-2);
+            opacity: 0.6;
+            margin-top: 6px;
+        }
+
+        /* ─── CTA ─── */
+        .cta-section {
+            padding: 120px 8%;
+            text-align: center;
+            background: linear-gradient(135deg, #200a0a 0%, #180707 40%, var(--bg) 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cta-section .sec-title { margin-bottom: 20px; }
+
+        .cta-section p {
+            font-size: 14px;
+            color: var(--cream-2);
+            max-width: 480px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; }
+            50%       { opacity: 1; }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .about-preview {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 70px 6%;
+            }
+            .about-v-divider { display: none; }
+            .about-stats {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 24px;
+                padding-left: 0;
+            }
+            .stat-item { flex: 1; min-width: 100px; }
+        }
+
+        @media (max-width: 700px) {
+            .hero-bottles { gap: 14px; }
+            .hero-bottle-frame { width: 80px; height: 260px; }
+            .hero-bottle-name { font-size: 10px; letter-spacing: 1.5px; }
+            .quote-section { padding: 70px 5%; }
+            .cta-section { padding: 80px 5%; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-bottles { gap: 8px; }
+            .hero-bottle-frame { width: 64px; height: 200px; }
+            .about-stats { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <ul class="sidebar" id="sidebar">
+        <li><a href="#" onclick="hideSidebar(); return false;" class="sidebar-close">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </a></li>
+        <li><a href="index.html">Početna</a></li>
+        <li><a href="vina.html">Vina</a></li>
+        <li><a href="o_nama.html">O nama</a></li>
+        <li><a href="galerija.html">Galerija</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <ul class="nav-main">
+        <li><a href="index.html" class="logo-link"><span class="logo-text">Mihajlović</span></a></li>
+        <li class="hideOnMobile"><a href="index.html" class="nav-link">Početna</a></li>
+        <li class="hideOnMobile"><a href="vina.html" class="nav-link">Vina</a></li>
+        <li class="hideOnMobile"><a href="o_nama.html" class="nav-link">O nama</a></li>
+        <li class="hideOnMobile"><a href="galerija.html" class="nav-link">Galerija</a></li>
+        <li class="hideOnMobile"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="hideOnMobile"><a href="kontakt.html" class="nav-link">Kontakt</a></li>
+        <li class="menu-button" onclick="showSidebar()">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a>
+        </li>
+    </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────── -->
+<section class="hero">
+    <span class="hero-eyebrow">Vinarija &middot; Od 1856. godine &middot; Župa Aleksandrovačka</span>
+    <h1 class="hero-title">Mihajlović</h1>
+    <p class="hero-subtitle">Tradicija &nbsp;&middot;&nbsp; Kvalitet &nbsp;&middot;&nbsp; Strast</p>
+    <div class="hero-line"></div>
+
+    <div class="hero-bottles">
+        <a href="vina.html#Caberne" class="hero-bottle-item">
+            <div class="hero-bottle-frame">
+                <img src="slike/Packshot_Dragulj_Tamno Plavi.png" alt="Caberne">
+            </div>
+            <span class="hero-bottle-name">Caberne</span>
+        </a>
+        <a href="vina.html#Rose" class="hero-bottle-item rose-bottle">
+            <div class="hero-bottle-frame">
+                <img src="slike/Packshot_Rose.png" alt="Rosé">
+            </div>
+            <span class="hero-bottle-name">Rosé</span>
+        </a>
+        <a href="vina.html#Dragulj" class="hero-bottle-item">
+            <div class="hero-bottle-frame">
+                <img src="slike/Packshot_Dragulj.png" alt="Dragulj">
+            </div>
+            <span class="hero-bottle-name">Dragulj</span>
+        </a>
+        <a href="vina.html#Enigma" class="hero-bottle-item">
+            <div class="hero-bottle-frame">
+                <img src="slike/Packshot_Enigma PP.png" alt="Enigma">
+            </div>
+            <span class="hero-bottle-name">Enigma</span>
+        </a>
+    </div>
+
+    <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+    </div>
+</section>
+
+<!-- ─── QUOTE ─────────────────────────────────── -->
+<section class="quote-section">
+    <span class="quote-mark">&ldquo;</span>
+    <p class="quote-text">Kome se žuri, ti neka piju mlada vina; meni neka natoče staroga vina, koje je spremljeno pod drevnim konzulima</p>
+    <span class="quote-author">&mdash; Ovidije</span>
+</section>
+
+<!-- ─── ABOUT PREVIEW ─────────────────────────── -->
+<section class="about-preview">
+    <div class="about-text">
+        <span class="sec-label">Naša priča</span>
+        <h2 class="sec-title">Sedam generacija tradicije</h2>
+        <div class="sec-divider"></div>
+        <p>Vinarija Mihajlović nalazi se u srcu Župe aleksandrovačke, jednom od najlepših krajeva za uzgoj vinove loze. Tradicija naše porodice traje od 1856. godine i prenosi se sa kolena na koleno, danas u VII generaciji. Naša vina nose u sebi duh ovog kraja i ljubav prema vinogradarstvu.</p>
+        <a href="o_nama.html" class="btn-outline">Saznajte više</a>
+    </div>
+
+    <div class="about-v-divider"></div>
+
+    <div class="about-stats">
+        <div class="stat-item">
+            <div class="stat-number">1856</div>
+            <div class="stat-label">Godina osnivanja</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">VII</div>
+            <div class="stat-label">Generacija porodice</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">20K</div>
+            <div class="stat-label">Boca godišnje</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">3ha</div>
+            <div class="stat-label">Vinograda</div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA ───────────────────────────────────── -->
+<section class="cta-section">
+    <span class="sec-label">Posetite nas</span>
+    <h2 class="sec-title">Vinarija Mihajlović</h2>
+    <p>Dobrodošli u svet vrhunskih vina iz srca Župe aleksandrovačke. Radujemo se vašoj poseti i zajedničkom uživanju u tradiciji koja traje vekovima.</p>
+    <a href="kontakt.html" class="btn-outline">Kontaktirajte nas</a>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">Mihajlović</div>
+        <div class="footer-tagline">Vinarija &middot; Od 1856. godine</div>
+        <div class="footer-hr"></div>
+        <ul class="footer-nav">
+            <li><a href="index.html">Početna</a></li>
+            <li><a href="vina.html">Vina</a></li>
+            <li><a href="o_nama.html">O nama</a></li>
+            <li><a href="galerija.html">Galerija</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+        <div class="footer-social">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/vinarijamihajlovic?igsh=MWQzcGxwazJzd2RjOQ==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+        <div class="footer-hr"></div>
+        <p class="footer-copy">&copy; 2024 Vinarija Mihajlović &middot; Sva prava zadržana</p>
+    </div>
+</footer>
+
+<script src="skript.js"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerija &mdash; Vinarija Mihajlović</title>
+    <link rel="stylesheet" href="stil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .gallery-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 5% 80px;
+            background: radial-gradient(ellipse at 50% 10%, #1e0a0a 0%, var(--bg) 60%);
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 140px;
+        }
+
+        .gallery-header .sec-title { margin-bottom: 12px; }
+
+        .gallery-header p {
+            font-size: 12px;
+            color: var(--cream-2);
+            letter-spacing: 1.5px;
+            opacity: 0.55;
+        }
+
+        /* ─── CAROUSEL ─── */
+        .gallery {
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .gallery-container {
+            display: flex;
+            align-items: center;
+            height: 460px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            height: 300px;
+            opacity: 0;
+            position: absolute;
+            transition: all 0.4s ease-in-out;
+            width: 340px;
+            z-index: 0;
+            border-radius: 2px;
+            object-fit: cover;
+            filter: brightness(0.55) sepia(0.15);
+        }
+
+        .gallery-item-1 {
+            left: 5%;
+            opacity: 0.35;
+            transform: translateX(-50%);
+        }
+
+        .gallery-item-2,
+        .gallery-item-4 {
+            height: 460px;
+            opacity: 0.7;
+            width: 380px;
+            z-index: 1;
+            filter: brightness(0.65) sepia(0.1);
+        }
+
+        .gallery-item-2 {
+            left: 27%;
+            transform: translateX(-50%);
+        }
+
+        .gallery-item-3 {
+            height: 620px;
+            opacity: 1;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 540px;
+            z-index: 2;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+            filter: brightness(0.8) sepia(0.08);
+            outline: 1px solid var(--border);
+            outline-offset: 6px;
+        }
+
+        .gallery-item-4 {
+            left: 73%;
+            transform: translateX(-50%);
+        }
+
+        .gallery-item-5 {
+            left: 95%;
+            opacity: 0.35;
+            transform: translateX(-50%);
+        }
+
+        /* ─── CONTROLS ─── */
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 150px;
+            gap: 60px;
+            height: 60px;
+        }
+
+        .gallery-controls button {
+            background: transparent;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            padding: 14px 20px;
+            color: var(--cream-2);
+            transition: border-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        .gallery-controls button:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .gallery-controls button:focus { outline: none; }
+
+        .gallery-controls-previous::before {
+            border: solid var(--gold);
+            border-width: 0 1.5px 1.5px 0;
+            content: '';
+            display: inline-block;
+            height: 8px;
+            width: 8px;
+            transform: rotate(135deg);
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-controls-next::before {
+            border: solid var(--gold);
+            border-width: 0 1.5px 1.5px 0;
+            content: '';
+            display: inline-block;
+            height: 8px;
+            width: 8px;
+            transform: rotate(-45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-controls-previous:hover::before { transform: rotate(135deg) translate(2px, 2px); }
+        .gallery-controls-next:hover::before     { transform: rotate(-45deg) translate(-2px, 2px); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .gallery-container { height: 360px; }
+            .gallery-item-3 { height: 330px; width: 340px; }
+            .gallery-item-2, .gallery-item-4 { height: 280px; width: 300px; }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-section { padding: 120px 3% 60px; }
+            .gallery-container { height: 300px; }
+            .gallery-item      { width: 260px; height: 220px; }
+            .gallery-item-3    { width: 290px; height: 270px; }
+            .gallery-item-2, .gallery-item-4 { height: 240px; width: 270px; }
+        }
+
+        @media (max-width: 430px) {
+            .gallery-item   { width: 220px; height: 180px; }
+            .gallery-item-3 { width: 240px; height: 230px; }
+            .gallery-item-1 { left: 8%; }
+            .gallery-item-5 { left: 92%; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <ul class="sidebar" id="sidebar">
+        <li><a href="#" onclick="hideSidebar(); return false;" class="sidebar-close">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </a></li>
+        <li><a href="index.html">Početna</a></li>
+        <li><a href="vina.html">Vina</a></li>
+        <li><a href="o_nama.html">O nama</a></li>
+        <li><a href="galerija.html">Galerija</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <ul class="nav-main">
+        <li><a href="index.html" class="logo-link"><span class="logo-text">Mihajlović</span></a></li>
+        <li class="hideOnMobile"><a href="index.html" class="nav-link">Početna</a></li>
+        <li class="hideOnMobile"><a href="vina.html" class="nav-link">Vina</a></li>
+        <li class="hideOnMobile"><a href="o_nama.html" class="nav-link">O nama</a></li>
+        <li class="hideOnMobile"><a href="galerija.html" class="nav-link">Galerija</a></li>
+        <li class="hideOnMobile"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="hideOnMobile"><a href="kontakt.html" class="nav-link">Kontakt</a></li>
+        <li class="menu-button" onclick="showSidebar()">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a>
+        </li>
+    </ul>
+</nav>
+
+<section class="gallery-section">
+    <div class="gallery-header">
+        <span class="sec-label">Vinarija Mihajlović</span>
+        <h1 class="sec-title">Galerija</h1>
+        <p>Vizuelni prikaz naše tradicije, vinograda i vina</p>
+    </div>
+
+    <div class="gallery">
+        <div class="gallery-container">
+            <img class="gallery-item gallery-item-1" src="slike/Mihajlović_Bure.jpg" data-index="1" alt="">
+            <img class="gallery-item gallery-item-2" src="slike/Mihajlović_Pampur.jpg" data-index="2" alt="">
+            <img class="gallery-item gallery-item-3" src="slike/Ai slika.jpeg" data-index="3" alt="">
+            <img class="gallery-item gallery-item-4" src="slike/dragulj_upscaled.png" data-index="4" alt="">
+            <img class="gallery-item gallery-item-5" src="slike/slika4.jpg" data-index="5" alt="">
+        </div>
+        <div class="gallery-controls"></div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">Mihajlović</div>
+        <div class="footer-tagline">Vinarija &middot; Od 1856. godine</div>
+        <div class="footer-hr"></div>
+        <ul class="footer-nav">
+            <li><a href="index.html">Početna</a></li>
+            <li><a href="vina.html">Vina</a></li>
+            <li><a href="o_nama.html">O nama</a></li>
+            <li><a href="galerija.html">Galerija</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+        <div class="footer-social">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/vinarijamihajlovic?igsh=MWQzcGxwazJzd2RjOQ==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+        <div class="footer-hr"></div>
+        <p class="footer-copy">&copy; 2024 Vinarija Mihajlović &middot; Sva prava zadržana</p>
+    </div>
+</footer>
+
+<script src="skript.js"></script>
+</body>
+</html>

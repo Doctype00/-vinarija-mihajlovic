@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt &mdash; Vinarija Mihajlović</title>
+    <link rel="stylesheet" href="stil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ─── PAGE BACKGROUND ─── */
+        .contact-page {
+            background:
+                radial-gradient(ellipse at 15% 40%, rgba(80, 10, 22, 0.22) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 20%, rgba(30, 8, 8, 0.4) 0%, transparent 50%),
+                var(--bg);
+            min-height: 100vh;
+        }
+
+        /* ─── HERO HEADER ─── */
+        .contact-hero {
+            padding: 180px 8% 80px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 60%, rgba(110, 18, 32, 0.18) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .contact-hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-hero .sec-title { margin-bottom: 16px; }
+
+        .contact-hero p {
+            font-size: 13px;
+            color: var(--cream-2);
+            opacity: 0.6;
+            max-width: 440px;
+            line-height: 1.85;
+            letter-spacing: 0.3px;
+        }
+
+        /* ─── MAIN GRID ─── */
+        .contact-main {
+            display: grid;
+            grid-template-columns: 1fr 1.45fr;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ─── LEFT PANEL ─── */
+        .contact-left {
+            padding: 80px 8% 80px 8%;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .contact-panel-label {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.55;
+            margin-bottom: 48px;
+        }
+
+        /* ─── CONTACT ITEMS ─── */
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 22px;
+            align-items: flex-start;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+        }
+
+        .contact-item:first-child { border-top: 1px solid var(--border); }
+
+        .contact-item-icon {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 13px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .contact-item:hover .contact-item-icon {
+            border-color: rgba(201, 165, 90, 0.45);
+            background: rgba(201, 165, 90, 0.06);
+        }
+
+        .contact-item-label {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.6;
+            margin-bottom: 8px;
+        }
+
+        .contact-item-value {
+            font-size: 15px;
+            color: var(--cream);
+            line-height: 1.65;
+        }
+
+        .contact-item-value a {
+            color: var(--cream);
+            transition: color 0.3s ease;
+        }
+
+        .contact-item-value a:hover { color: var(--gold); }
+
+        /* ─── HOURS ─── */
+        .hours-table { margin-top: 2px; }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            font-size: 13px;
+            gap: 20px;
+        }
+
+        .hours-row + .hours-row { border-top: 1px solid rgba(201, 165, 90, 0.08); }
+
+        .hours-day { color: var(--cream-2); opacity: 0.6; }
+        .hours-time { color: var(--cream); white-space: nowrap; }
+
+        /* ─── RIGHT PANEL (FORM) ─── */
+        .contact-right {
+            padding: 80px 8%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form-header {
+            margin-bottom: 48px;
+        }
+
+        .contact-form-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 3.5vw, 42px);
+            font-weight: 400;
+            color: var(--cream);
+            line-height: 1.1;
+            margin-bottom: 14px;
+        }
+
+        .contact-form-header p {
+            font-size: 12px;
+            color: var(--cream-2);
+            opacity: 0.55;
+            letter-spacing: 0.5px;
+            line-height: 1.7;
+        }
+
+        /* ─── FORM ─── */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group label {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.6;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--cream);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            padding: 14px 18px;
+            outline: none;
+            transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 0;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--cream-2);
+            opacity: 0.3;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: rgba(201, 165, 90, 0.5);
+            background: rgba(201, 165, 90, 0.04);
+            box-shadow: 0 0 0 1px rgba(201, 165, 90, 0.12), 0 4px 24px rgba(139, 34, 50, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.7;
+        }
+
+        /* ─── SUBMIT BUTTON ─── */
+        .form-submit {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .btn-contact-submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            background: transparent;
+            border: 1px solid rgba(201, 165, 90, 0.45);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            padding: 16px 36px;
+            cursor: pointer;
+            transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, transform 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-contact-submit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(201, 165, 90, 0.08);
+            transform: translateX(-101%);
+            transition: transform 0.35s ease;
+        }
+
+        .btn-contact-submit:hover::before { transform: translateX(0); }
+
+        .btn-contact-submit:hover {
+            border-color: rgba(201, 165, 90, 0.75);
+            color: var(--gold-lt);
+        }
+
+        .btn-contact-submit:active { transform: translateY(1px); }
+
+        .btn-contact-submit .btn-arrow {
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-contact-submit:hover .btn-arrow { transform: translateX(4px); }
+
+        .form-note {
+            font-size: 11px;
+            color: var(--cream-2);
+            opacity: 0.35;
+            letter-spacing: 0.3px;
+        }
+
+        /* ─── MAP STRIP ─── */
+        .contact-map-strip {
+            position: relative;
+        }
+
+        .contact-map-strip iframe {
+            width: 100%;
+            height: 380px;
+            border: 0;
+            filter: grayscale(0.85) brightness(0.65) sepia(0.18);
+            display: block;
+        }
+
+        .contact-map-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(to right, rgba(12, 10, 8, 0.55) 0%, transparent 30%, transparent 70%, rgba(12, 10, 8, 0.55) 100%),
+                linear-gradient(to bottom, rgba(12, 10, 8, 0.4) 0%, transparent 25%, transparent 75%, rgba(12, 10, 8, 0.5) 100%);
+        }
+
+        /* ─── FORM SUCCESS STATE ─── */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 48px 24px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-success.visible { display: block; }
+
+        .form-success-icon {
+            width: 56px;
+            height: 56px;
+            border: 1px solid rgba(201, 165, 90, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 20px;
+            margin: 0 auto 24px;
+        }
+
+        .form-success h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 12px;
+        }
+
+        .form-success p {
+            font-size: 12px;
+            color: var(--cream-2);
+            opacity: 0.55;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── FADE-IN ANIMATION ─── */
+        .contact-fade {
+            opacity: 0;
+            transform: translateY(24px);
+            animation: contactFade 0.65s ease forwards;
+        }
+
+        .contact-fade:nth-child(1) { animation-delay: 0.05s; }
+        .contact-fade:nth-child(2) { animation-delay: 0.15s; }
+        .contact-fade:nth-child(3) { animation-delay: 0.25s; }
+        .contact-fade:nth-child(4) { animation-delay: 0.35s; }
+
+        @keyframes contactFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 960px) {
+            .contact-main {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-left {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 60px 6%;
+            }
+
+            .contact-right { padding: 60px 6%; }
+
+            .contact-hero { padding: 150px 6% 60px; }
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .contact-hero { padding: 130px 5% 50px; }
+            .contact-left, .contact-right { padding: 50px 5%; }
+            .contact-map-strip iframe { height: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="contact-page">
+
+<nav id="navbar">
+    <ul class="sidebar" id="sidebar">
+        <li><a href="#" onclick="hideSidebar(); return false;" class="sidebar-close">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </a></li>
+        <li><a href="index.html">Početna</a></li>
+        <li><a href="vina.html">Vina</a></li>
+        <li><a href="o_nama.html">O nama</a></li>
+        <li><a href="galerija.html">Galerija</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <ul class="nav-main">
+        <li><a href="index.html" class="logo-link"><span class="logo-text">Mihajlović</span></a></li>
+        <li class="hideOnMobile"><a href="index.html" class="nav-link">Početna</a></li>
+        <li class="hideOnMobile"><a href="vina.html" class="nav-link">Vina</a></li>
+        <li class="hideOnMobile"><a href="o_nama.html" class="nav-link">O nama</a></li>
+        <li class="hideOnMobile"><a href="galerija.html" class="nav-link">Galerija</a></li>
+        <li class="hideOnMobile"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="hideOnMobile"><a href="kontakt.html" class="nav-link">Kontakt</a></li>
+        <li class="menu-button" onclick="showSidebar()">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a>
+        </li>
+    </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<header class="contact-hero">
+    <div class="contact-hero-inner">
+        <span class="sec-label">Pronađite nas</span>
+        <h1 class="sec-title">Kontakt</h1>
+        <div class="sec-divider"></div>
+        <p>Dobrodošli u Vinariju Mihajlović. Posjetite nas, naručite vino ili nam postavite bilo kakvo pitanje — uvek smo tu za Vas.</p>
+    </div>
+</header>
+
+<!-- ─── MAIN CONTENT ─── -->
+<div class="contact-main">
+
+    <!-- LEFT: INFO -->
+    <div class="contact-left">
+        <div class="contact-panel-label">Informacije</div>
+
+        <div class="contact-items">
+
+            <div class="contact-item contact-fade">
+                <div class="contact-item-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                    <div class="contact-item-label">Adresa</div>
+                    <div class="contact-item-value">
+                        <a href="https://maps.app.goo.gl/rebTfwxuxjd1NgWs6" target="_blank">
+                            Župa Aleksandrovačka<br>Srbija
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-item contact-fade">
+                <div class="contact-item-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                    <div class="contact-item-label">Telefon</div>
+                    <div class="contact-item-value">
+                        <a href="tel:+381605578727">060 5578727</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-item contact-fade">
+                <div class="contact-item-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div>
+                    <div class="contact-item-label">E-mail</div>
+                    <div class="contact-item-value">
+                        <a href="mailto:saboss@gmail.com">saboss@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-item contact-fade">
+                <div class="contact-item-icon">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <div>
+                    <div class="contact-item-label">Radno vreme</div>
+                    <div class="hours-table">
+                        <div class="hours-row">
+                            <span class="hours-day">Radni dani &amp; Subota</span>
+                            <span class="hours-time">08:00 &ndash; 19:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Nedelja</span>
+                            <span class="hours-time">10:00 &ndash; 18:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div class="contact-right">
+        <div class="contact-form-header">
+            <h2>Pošaljite nam poruku</h2>
+            <p>Svaka poruka je dobrodošla. Odgovaramo u roku od 24 sata.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contact-name">Ime i prezime</label>
+                    <input
+                        type="text"
+                        id="contact-name"
+                        name="name"
+                        placeholder="Vaše ime"
+                        autocomplete="name"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">E-mail adresa</label>
+                    <input
+                        type="email"
+                        id="contact-email"
+                        name="email"
+                        placeholder="vas@email.com"
+                        autocomplete="email"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-subject">Tema</label>
+                <input
+                    type="text"
+                    id="contact-subject"
+                    name="subject"
+                    placeholder="O čemu se radi?"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="contact-message">Poruka</label>
+                <textarea
+                    id="contact-message"
+                    name="message"
+                    placeholder="Napišite Vašu poruku ovde..."
+                ></textarea>
+            </div>
+
+            <div class="form-submit">
+                <button type="submit" class="btn-contact-submit">
+                    Pošaljite poruku
+                    <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </button>
+                <span class="form-note">Diskretno &middot; Bez spama</span>
+            </div>
+
+        </form>
+
+        <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3>Poruka primljena</h3>
+            <p>Hvala Vam. Javićemo se u najkraćem mogućem roku.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ─── MAP STRIP ─── -->
+<div class="contact-map-strip">
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d724.0369615614059!2d21.078031203308168!3d43.45751048825865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47566936615fc711%3A0xa8a4c83ecdc64019!2sSaboss%20doo!5e0!3m2!1ssr!2srs!4v1708699143687!5m2!1ssr!2srs"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Lokacija Vinarije Mihajlović">
+    </iframe>
+    <div class="contact-map-overlay"></div>
+</div>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">Mihajlović</div>
+        <div class="footer-tagline">Vinarija &middot; Od 1856. godine</div>
+        <div class="footer-hr"></div>
+        <ul class="footer-nav">
+            <li><a href="index.html">Početna</a></li>
+            <li><a href="vina.html">Vina</a></li>
+            <li><a href="o_nama.html">O nama</a></li>
+            <li><a href="galerija.html">Galerija</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+        <div class="footer-social">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/vinarijamihajlovic?igsh=MWQzcGxwazJzd2RjOQ==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+        <div class="footer-hr"></div>
+        <p class="footer-copy">&copy; 2024 Vinarija Mihajlović &middot; Sva prava zadržana</p>
+    </div>
+</footer>
+
+</div>
+
+<script src="skript.js"></script>
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        this.style.opacity = '0';
+        this.style.transform = 'translateY(-12px)';
+        this.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        setTimeout(() => {
+            this.style.display = 'none';
+            const success = document.getElementById('formSuccess');
+            success.classList.add('visible');
+        }, 400);
+    });
+</script>
+</body>
+</html>

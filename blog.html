@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog &mdash; Vinarija Mihajlović</title>
+    <link rel="stylesheet" href="stil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .blog-section {
+            padding: 180px 8% 120px;
+            background: radial-gradient(ellipse at 50% 0%, #1a0808 0%, var(--bg) 55%);
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .blog-header .sec-title { margin-bottom: 14px; }
+
+        .blog-header p {
+            font-size: 13px;
+            color: var(--cream-2);
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        /* ─── GRID ─── */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* ─── CARD ─── */
+        .blog-card {
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.4s ease, transform 0.4s ease;
+            overflow: hidden;
+        }
+
+        .blog-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-8px);
+        }
+
+        .blog-card-img-wrap {
+            overflow: hidden;
+            height: 240px;
+            flex-shrink: 0;
+        }
+
+        .blog-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) sepia(0.15);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .blog-card:hover .blog-card-img-wrap img {
+            transform: scale(1.05);
+            filter: brightness(0.75) sepia(0.08);
+        }
+
+        .blog-card-body {
+            padding: 32px 28px 28px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .blog-card-label {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.75;
+            margin-bottom: 14px;
+        }
+
+        .blog-card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--cream);
+            line-height: 1.35;
+            margin-bottom: 16px;
+        }
+
+        .blog-card-divider {
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.4;
+            margin-bottom: 16px;
+        }
+
+        .blog-card-text {
+            font-size: 13px;
+            color: var(--cream-2);
+            line-height: 1.8;
+            opacity: 0.7;
+            flex: 1;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1000px) {
+            .blog-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 650px) {
+            .blog-section { padding: 120px 5% 80px; }
+            .blog-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <ul class="sidebar" id="sidebar">
+        <li><a href="#" onclick="hideSidebar(); return false;" class="sidebar-close">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </a></li>
+        <li><a href="index.html">Početna</a></li>
+        <li><a href="vina.html">Vina</a></li>
+        <li><a href="o_nama.html">O nama</a></li>
+        <li><a href="galerija.html">Galerija</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <ul class="nav-main">
+        <li><a href="index.html" class="logo-link"><span class="logo-text">Mihajlović</span></a></li>
+        <li class="hideOnMobile"><a href="index.html" class="nav-link">Početna</a></li>
+        <li class="hideOnMobile"><a href="vina.html" class="nav-link">Vina</a></li>
+        <li class="hideOnMobile"><a href="o_nama.html" class="nav-link">O nama</a></li>
+        <li class="hideOnMobile"><a href="galerija.html" class="nav-link">Galerija</a></li>
+        <li class="hideOnMobile"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="hideOnMobile"><a href="kontakt.html" class="nav-link">Kontakt</a></li>
+        <li class="menu-button" onclick="showSidebar()">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a>
+        </li>
+    </ul>
+</nav>
+
+<section class="blog-section">
+    <div class="blog-header">
+        <span class="sec-label">Reč iz podruma</span>
+        <h1 class="sec-title">Naš blog</h1>
+        <p>Priče o vinu, tradiciji i umetnosti vinogradarstva</p>
+    </div>
+
+    <div class="blog-grid">
+
+        <article class="blog-card">
+            <div class="blog-card-img-wrap">
+                <img src="slike/dragulj_upscaled.png" alt="Degustacija vina">
+            </div>
+            <div class="blog-card-body">
+                <span class="blog-card-label">Degustacija</span>
+                <h2 class="blog-card-title">Tajne savršene degustacije vina: saveti iz našeg podruma</h2>
+                <div class="blog-card-divider"></div>
+                <p class="blog-card-text">Degustacija vina podrazumeva pažljivo posmatranje, mirisanje i kušanje. Vizuelna procena otkriva starost i kvalitet, arome govore o karakteru, a tek na nepcu se otkriva prava priroda vina — njegova kiselost, tanini i završni ukus.</p>
+            </div>
+        </article>
+
+        <article class="blog-card">
+            <div class="blog-card-img-wrap">
+                <img src="slike/Mihajlović_Bure.jpg" alt="Hrastova burad">
+            </div>
+            <div class="blog-card-body">
+                <span class="blog-card-label">Tehnologija</span>
+                <h2 class="blog-card-title">Vrste buradi i njihov uticaj na vino</h2>
+                <div class="blog-card-divider"></div>
+                <p class="blog-card-text">Francuski hrast daje suptilne arome vanile i začina. Američki hrast donosi izraženije note kokosa i karamele. Slavonski hrast, omiljen u Evropi, nudi delikatne arome idealne za vina koja zahtevaju duže odležavanje.</p>
+            </div>
+        </article>
+
+        <article class="blog-card">
+            <div class="blog-card-img-wrap">
+                <img src="slike/mihajlovic_01-1200x800.jpg" alt="Vinogradi">
+            </div>
+            <div class="blog-card-body">
+                <span class="blog-card-label">Vinogradi</span>
+                <h2 class="blog-card-title">Naši vinogradi: srce Vinarije Mihajlović</h2>
+                <div class="blog-card-divider"></div>
+                <p class="blog-card-text">Smešteni u Župi, naši vinogradi uživaju u idealnim klimatskim uslovima za uzgoj vrhunskog grožđa. Svaka loza je pažljivo negovana kombinacijom tradicionalnih metoda i modernih tehnika, stvarajući osnovu za vina izuzetnog karaktera.</p>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">Mihajlović</div>
+        <div class="footer-tagline">Vinarija &middot; Od 1856. godine</div>
+        <div class="footer-hr"></div>
+        <ul class="footer-nav">
+            <li><a href="index.html">Početna</a></li>
+            <li><a href="vina.html">Vina</a></li>
+            <li><a href="o_nama.html">O nama</a></li>
+            <li><a href="galerija.html">Galerija</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+        <div class="footer-social">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/vinarijamihajlovic?igsh=MWQzcGxwazJzd2RjOQ==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+        <div class="footer-hr"></div>
+        <p class="footer-copy">&copy; 2024 Vinarija Mihajlović &middot; Sva prava zadržana</p>
+    </div>
+</footer>
+
+<script src="skript.js"></script>
+</body>
+</html>
