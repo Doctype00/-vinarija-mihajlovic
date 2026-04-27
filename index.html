@@ -45,7 +45,7 @@
 
         .hero-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(60px, 12vw, 130px);
+            font-size: clamp(38px, 10vw, 130px);
             font-weight: 300;
             color: var(--cream);
             letter-spacing: 6px;
@@ -319,8 +319,8 @@
         /* ── Large mobile (700px) ── */
         @media (max-width: 700px) {
             .hero { min-height: auto; height: auto; padding: 100px 16px 60px; }
-            .hero-title { letter-spacing: 3px; }
-            .hero-subtitle { letter-spacing: 2.5px; }
+            .hero-title { letter-spacing: 2px; }
+            .hero-subtitle { letter-spacing: 2px; }
             .hero-eyebrow { font-size: 9px; letter-spacing: 3px; }
 
             /* 4 bottles in a row, smaller */
@@ -343,7 +343,7 @@
                 justify-content: flex-start;
                 padding-top: 90px;
             }
-            .hero-title { letter-spacing: 2px; }
+            .hero-title { font-size: clamp(32px, 9vw, 52px); letter-spacing: 1px; }
 
             /* 2×2 grid — all 4 bottles always visible */
             .hero-bottles {
