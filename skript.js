@@ -81,3 +81,26 @@ if (galleryContainer && galleryControlsContainer && galleryItems.length > 0) {
     exampleCarousel.setControls();
     exampleCarousel.useControl();
 }
+
+/* ─── WINE SECTION IN-VIEW ANIMATION ─────────── */
+var wineSections = document.querySelectorAll('.wine-section');
+if (wineSections.length > 0) {
+    var wineObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.classList.remove('in-view');
+            }
+        });
+    }, {
+        /* Trigger when 45% of the section is visible —
+           high enough to feel intentional, low enough to
+           catch tall mobile sections mid-scroll             */
+        threshold: 0.45
+    });
+
+    wineSections.forEach(function (section) {
+        wineObserver.observe(section);
+    });
+}
