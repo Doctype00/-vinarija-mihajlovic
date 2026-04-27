@@ -159,6 +159,39 @@ nav ul.nav-main > li:first-child { margin-right: auto; }
 @media (max-width: 900px) {
   .hideOnMobile { display: none; }
   .menu-button  { display: block; }
+
+  /* ─── Compact nav on tablets/mobile ─── */
+  nav { padding: 0 4%; }
+  nav ul.nav-main { height: 65px; }
+  .menu-button a  { height: 65px; }
+
+  /* ─── Logo text ─── */
+  .logo-text {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  /* ─── Logo image (pages that use img instead of text) ─── */
+  .logo-text img {
+    width: 80px !important;
+    height: 40px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  nav { padding: 0 4%; }
+  nav ul.nav-main { height: 58px; }
+  .menu-button a  { height: 58px; }
+
+  .logo-text {
+    font-size: 15px;
+    letter-spacing: 1.5px;
+  }
+
+  .logo-text img {
+    width: 65px !important;
+    height: 33px !important;
+  }
 }
 
 @media (max-width: 400px) {

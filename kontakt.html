@@ -404,9 +404,21 @@
 
         @media (max-width: 600px) {
             .form-row { grid-template-columns: 1fr; }
-            .contact-hero { padding: 130px 5% 50px; }
-            .contact-left, .contact-right { padding: 50px 5%; }
-            .contact-map-strip iframe { height: 280px; }
+            .contact-hero { padding: 110px 5% 45px; }
+            .contact-left, .contact-right { padding: 44px 5%; }
+            .contact-map-strip iframe { height: 260px; }
+            .contact-form-header h2 { font-size: 26px; }
+            .btn-contact-submit { padding: 14px 24px; font-size: 8px; letter-spacing: 2.5px; }
+        }
+
+        @media (max-width: 400px) {
+            .contact-hero { padding: 95px 4% 40px; }
+            .contact-left, .contact-right { padding: 38px 4%; }
+            .contact-panel-label { margin-bottom: 30px; }
+            .contact-item { gap: 16px; padding: 22px 0; }
+            .contact-item-icon { width: 36px; height: 36px; font-size: 12px; }
+            .contact-item-value { font-size: 13px; }
+            .form-submit { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>

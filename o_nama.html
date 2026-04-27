@@ -214,13 +214,23 @@
         }
 
         @media (max-width: 700px) {
-            .history-section,
+            .history-section { padding: 110px 5% 70px; }
             .vineyard-section,
-            .awards-section { padding: 80px 5%; }
+            .awards-section  { padding: 70px 5%; }
+            .history-image-block img,
+            .vineyard-image img { height: 280px; }
             .timeline-row { flex-direction: column; gap: 24px; }
             .timeline-item { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
             .timeline-item:last-child { border-bottom: none; }
             .awards-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .history-section { padding: 95px 4% 60px; }
+            .vineyard-section,
+            .awards-section  { padding: 60px 4%; }
+            .stat-number,
+            .timeline-year   { font-size: 30px; }
         }
     </style>
 </head>

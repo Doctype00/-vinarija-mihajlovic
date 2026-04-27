@@ -206,32 +206,43 @@
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 900px) {
+            .wines-header { padding: 120px 6% 60px; }
+
             .wine-section,
             .wine-section.reverse {
                 flex-direction: column;
-                padding: 80px 6%;
+                padding: 70px 6%;
                 min-height: auto;
                 text-align: center;
-                gap: 40px;
+                gap: 36px;
             }
 
             .wine-bottle-col {
-                padding: 20px;
+                padding: 16px;
                 flex: none;
                 width: 100%;
             }
 
-            .wine-bottle-col img { height: 340px; }
+            .wine-bottle-col img { height: 300px; width: auto; }
 
             .wine-info-col { max-width: 100%; }
 
-            .wine-grapes { justify-content: center; }
-
-            .wine-divider { margin: 24px auto; }
+            .wine-grapes  { justify-content: center; }
+            .wine-divider { margin: 20px auto; }
+            .wine-number  { font-size: 60px; }
         }
 
-        @media (max-width: 480px) {
-            .wine-bottle-col img { height: 260px; }
+        @media (max-width: 600px) {
+            .wine-section,
+            .wine-section.reverse { padding: 60px 5%; gap: 28px; }
+            .wine-bottle-col img  { height: 260px; }
+            .wine-name            { font-size: clamp(36px, 10vw, 60px); }
+        }
+
+        @media (max-width: 380px) {
+            .wine-section,
+            .wine-section.reverse { padding: 50px 4%; }
+            .wine-bottle-col img  { height: 220px; }
         }
     </style>
 </head>

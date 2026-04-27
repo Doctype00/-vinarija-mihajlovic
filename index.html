@@ -296,7 +296,11 @@
         }
 
         /* ─── RESPONSIVE ─── */
+
+        /* ── Tablet (900px) ── */
         @media (max-width: 900px) {
+            .hero { padding-top: 65px; min-height: 600px; }
+
             .about-preview {
                 grid-template-columns: 1fr;
                 gap: 40px;
@@ -312,17 +316,74 @@
             .stat-item { flex: 1; min-width: 100px; }
         }
 
+        /* ── Large mobile (700px) ── */
         @media (max-width: 700px) {
-            .hero-bottles { gap: 14px; }
-            .hero-bottle-frame { width: 80px; height: 260px; }
-            .hero-bottle-name { font-size: 10px; letter-spacing: 1.5px; }
-            .quote-section { padding: 70px 5%; }
-            .cta-section { padding: 80px 5%; }
+            .hero { min-height: auto; height: auto; padding: 100px 16px 60px; }
+            .hero-title { letter-spacing: 3px; }
+            .hero-subtitle { letter-spacing: 2.5px; }
+            .hero-eyebrow { font-size: 9px; letter-spacing: 3px; }
+
+            /* 4 bottles in a row, smaller */
+            .hero-bottles { gap: 10px; padding: 0 8px; flex-wrap: nowrap; }
+            .hero-bottle-frame {
+                width: 80px;
+                height: 220px;
+                flex-shrink: 0;
+            }
+            .hero-bottle-name { font-size: 9px; letter-spacing: 1.5px; width: 80px; }
+
+            .quote-section { padding: 60px 5%; }
+            .cta-section   { padding: 70px 5%; }
         }
 
-        @media (max-width: 480px) {
-            .hero-bottles { gap: 8px; }
-            .hero-bottle-frame { width: 64px; height: 200px; }
+        /* ── Small mobile (520px) — switch to 2×2 grid ── */
+        @media (max-width: 520px) {
+            .hero {
+                padding: 90px 16px 50px;
+                justify-content: flex-start;
+                padding-top: 90px;
+            }
+            .hero-title { letter-spacing: 2px; }
+
+            /* 2×2 grid — all 4 bottles always visible */
+            .hero-bottles {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px 12px;
+                padding: 0;
+                width: 100%;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .hero-bottle-item {
+                flex-direction: column;
+                align-items: center;
+                transform: none !important;
+            }
+
+            .hero-bottle-frame {
+                width: 100%;
+                height: 180px;
+                flex-shrink: 1;
+            }
+
+            .hero-bottle-name {
+                width: 100%;
+                font-size: 10px;
+                letter-spacing: 1.5px;
+                text-align: center;
+            }
+
+            .scroll-indicator { display: none; }
+        }
+
+        /* ── Extra small (380px) ── */
+        @media (max-width: 380px) {
+            .hero { padding: 80px 12px 40px; }
+            .hero-bottles { max-width: 280px; gap: 14px 8px; }
+            .hero-bottle-frame { height: 155px; }
+            .hero-bottle-name { font-size: 9px; }
             .about-stats { flex-direction: column; }
         }
     </style>
